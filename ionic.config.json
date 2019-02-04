@@ -1,5 +1,7 @@
 {
   "name": "RateandPlay",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

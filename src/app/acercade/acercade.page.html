@@ -1,0 +1,37 @@
+<ion-header no-border color="primary">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{"acerca" | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h3 style="color:var(--ion-color-text)">{{"titleabout" | translate}}</h3>
+  <p style="color:var(--ion-color-text)">{{"descriptionabout" | translate}}
+  </p>
+  <h2 style="color:var(--ion-color-text)">{{"socialabout" | translate}}</h2>
+  <ion-row>
+  <h3 style="color:var(--ion-color-text)">Twitter</h3>
+
+    <ion-button color="secondary" style="padding-top: 10px; padding-left: 10px" href="https://twitter.com/ImNotChanches">
+      <ion-icon name="logo-twitter"></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <ion-row>
+    <h3 style="color:var(--ion-color-text)">Instagram</h3>
+  
+      <ion-button color="danger" style="padding-top: 10px; padding-left: 10px" href="https://www.instagram.com/chaanchess/">
+        <ion-icon name="logo-instagram"></ion-icon>
+      </ion-button>
+    </ion-row>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary" >
+    <ion-title style="font-size: 85%">Francisco José Sánchez Romero ©</ion-title>
+  </ion-toolbar>
+</ion-footer>

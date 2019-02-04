@@ -1,9 +1,100 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header no-border color="primary">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
     <ion-title>
-      Tab Two
+      <span style="font-weight:normal">{{"addtitle" | translate}}</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content padding>
+  <form [formGroup]="todo" (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-label>{{"tittleform" | translate}}</ion-label>
+      <i class="fa fa-check-circle check" *ngIf="todo.controls.title.valid"></i>
+      <i class="fa fa-exclamation-circle uncheck" *ngIf="todo.controls.title.invalid &&
+        todo.controls.title.touched"></i>
+      <ion-input type="text" formControlName="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{"descriptionform" | translate}}</ion-label>
+      <i class="fa fa-check-circle check" *ngIf="todo.controls.description.valid"></i>
+      <i class="fa fa-exclamation-circle uncheck" *ngIf="todo.controls.description.invalid &&
+        todo.controls.description.touched"></i>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{"puntuacionform" | translate}}</ion-label>
+      <i class="fa fa-check-circle check" *ngIf="todo.controls.puntuacion.valid"></i>
+      <i class="fa fa-exclamation-circle uncheck" *ngIf="todo.controls.puntuacion.invalid &&
+        todo.controls.puntuacion.touched"></i>
+      <ion-input type="number" formControlName="puntuacion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{"dificultadform" | translate}}</ion-label>
+      <i class="fa fa-check-circle check" *ngIf="todo.controls.dificultad.valid"></i>
+      <i class="fa fa-exclamation-circle uncheck" *ngIf="todo.controls.dificultad.invalid &&
+        todo.controls.dificultad.touched"></i>
+      <ion-select [okText]="'accept' | translate" [cancelText]="'decline' | translate" formControlName="dificultad">
+        <ion-select-option value="Fácil">{{"difeasy" | translate}}</ion-select-option>
+        <ion-select-option value="Medio">{{"difmedium" | translate}}</ion-select-option>
+        <ion-select-option value="Difícil">{{"difhard" | translate}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{"desarrolladoraform" | translate}}</ion-label>
+      <i class="fa fa-check-circle check" *ngIf="todo.controls.desarrolladora.valid"></i>
+      <i class="fa fa-exclamation-circle uncheck" *ngIf="todo.controls.desarrolladora.invalid &&
+        todo.controls.desarrolladora.touched"></i>
+      <ion-input type="text" formControlName="desarrolladora"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{"fechaform" | translate}}</ion-label>
+      <i class="fa fa-check-circle check" *ngIf="todo.controls.fecha.valid"></i>
+      <i class="fa fa-exclamation-circle uncheck" *ngIf="todo.controls.fecha.invalid &&
+        todo.controls.fecha.touched"></i>
+      <ion-datetime formControlName="fecha" [doneText]="'accept' | translate" [cancelText]="'decline' | translate"
+        displayFormat="DD/MM/YYYY"></ion-datetime>
+    </ion-item>
+    <ion-button shape="round" type="submit" [disabled]="!todo.valid">{{"savegame" | translate}}</ion-button>
+    <p *ngIf="todo.controls.title.invalid &&
+    todo.controls.title.touched">
+      {{"tittlegame" | translate}}
+    </p>
+    <p *ngIf="todo.controls.description.invalid &&
+    todo.controls.description.touched">
+      {{"descriptiongame" | translate}}
+    </p>
+    <p *ngIf="todo.controls.puntuacion.invalid &&
+    todo.controls.puntuacion.touched">
+      {{"puntuationgame" | translate}}
+    </p>
+    <p *ngIf="todo.controls.dificultad.invalid &&
+    todo.controls.dificultad.touched">
+      {{"dificultadgame" | translate}}
+    </p>
+    <p *ngIf="todo.controls.desarrolladora.invalid &&
+    todo.controls.desarrolladora.touched">
+      {{"desarrolladoregame" | translate}}
+    </p>
+    <p *ngIf="todo.controls.fecha.invalid &&
+    todo.controls.fecha.touched">
+      {{"fechagame" | translate}}
+    </p>
+
+    <ion-button (click)="getImage();photo=true" color="primary">
+      <ion-icon slot="icon-only" name="image"></ion-icon>
+      {{"btnimage" | translate}}
+    </ion-button>
+
+    <ion-img *ngIf="photo" #mifoto [src]="myphoto"></ion-img>
+
+  </form>
+
+</ion-content>

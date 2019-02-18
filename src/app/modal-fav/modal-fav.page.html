@@ -1,0 +1,45 @@
+<ion-header no-border color="primary">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button (click)="closeModal()">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{"gameinfo" | translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding>
+    <ion-img [src]="img"></ion-img>
+    <form [formGroup]="todo" (ngSubmit)="logForm()">
+      <ion-item>
+        <ion-icon name="logo-game-controller-a"></ion-icon>
+        <ion-label>{{"tittleform" | translate}}:</ion-label>
+        <ion-input type="text" formControlName="title" [readonly]="isReadonly" [(ngModel)]="titulo"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <ion-label>{{"descriptionform" | translate}}:</ion-label>
+        <ion-textarea formControlName="description" [readonly]="isReadonly" [(ngModel)]="descripcion"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="stats"></ion-icon>
+        <ion-label>{{"puntuacionform" | translate}}:</ion-label>
+        <ion-input type="text" formControlName="puntuacion" [readonly]="isReadonly" [(ngModel)]="puntuacion"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="help-circle-outline"></ion-icon>
+        <ion-label>{{"dificultadform" | translate}}:</ion-label>
+        <ion-input type="text" formControlName="dificultad" [readonly]="isReadonly" [(ngModel)]="dificultad"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="settings"></ion-icon>
+        <ion-label>{{"desarrolladoraform" | translate}}:</ion-label>
+        <ion-input type="text" formControlName="desarrolladora" [readonly]="isReadonly" [(ngModel)]="desarrolladora"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>{{"fechaform" | translate}}:</ion-label>
+        <ion-input type="text" formControlName="fecha" [readonly]="isReadonly" [(ngModel)]="fecha"></ion-input>
+      </ion-item>
+    </form>
+  </ion-content>

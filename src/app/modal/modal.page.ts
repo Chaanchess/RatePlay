@@ -66,14 +66,14 @@ export class ModalPage implements OnInit {
   Necesita recibir los atributos del juego para añadirlo correctamente
   a la base de datos.
   */
-  async presentActionSheet(id, titulo, descripcion, puntuacion, dificultad, img) {
+  async presentActionSheet(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img) {
     const actionSheet = await this.actionsheetCtrl.create({
       header: this.translate.instant("Addfavgame"),
       buttons: [{
         text: this.translate.instant("add"),
         icon: 'star',
         handler: () => {
-          this.addfavorites(id, titulo, descripcion, puntuacion, dificultad, img);
+          this.addfavorites(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img);
           this.showTastFav();
         }
       }, {
@@ -92,13 +92,15 @@ export class ModalPage implements OnInit {
   Método que se encargar de añadir el juego a la coleccion de 
   favoritos de la base de datos.
   */
-  addfavorites(id, titulo, descripcion, puntuacion, dificultad, img) {
+  addfavorites(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img) {
     console.log(titulo);
     let data = {
       title: titulo,
       description: descripcion,
       puntuacion: puntuacion,
       dificultad: dificultad,
+      desarrolladora: desarrolladora,
+      fecha: fecha,
       img: img
     };
     this.todoS.agregaJuegoFav(id, data);

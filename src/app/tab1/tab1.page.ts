@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TodoservicioService } from '../servicios/todoservicio.service';
 import { ToastController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
+import { ModalFavPage } from '../modal-fav/modal-fav.page';
 
 @Component({
   selector: 'app-tab1',
@@ -208,6 +209,24 @@ export class Tab1Page implements OnInit {
   async presentModal(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img, refresher) {
     const modal = await this.modalController.create({
       component: ModalPage,
+      /* El modal se abrirá con el valor de los atributos del juego que deseemos ver */
+      componentProps: {
+        id: id,
+        titulo: titulo,
+        descripcion: descripcion,
+        puntuacion: puntuacion,
+        dificultad: dificultad,
+        desarrolladora: desarrolladora,
+        fecha: fecha,
+        img:img
+      },
+    });
+    return await modal.present();
+  }
+
+  async presentModalFav(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img, refresher) {
+    const modal = await this.modalController.create({
+      component: ModalFavPage,
       /* El modal se abrirá con el valor de los atributos del juego que deseemos ver */
       componentProps: {
         id: id,

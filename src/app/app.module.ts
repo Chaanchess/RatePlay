@@ -25,13 +25,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ThemeSwitcherService } from './servicios/theme-switcher.service';
+import { ModalFavPage } from './modal-fav/modal-fav.page';
 export function setTranslateLoader(http: any) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, ModalPage, AcercadePage],
-  entryComponents: [ModalPage, AcercadePage],
+  declarations: [AppComponent, ModalPage, AcercadePage, ModalFavPage],
+  entryComponents: [ModalPage, AcercadePage, ModalFavPage],
   imports: [BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,

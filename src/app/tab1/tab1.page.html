@@ -12,17 +12,18 @@
       <span style="font-weight:normal">Rate & Play</span>
     </ion-title>
     <ion-searchbar *ngIf="isSearchBarOpen" #searchBar id="searchBar" showCancelButton="true" cancelButtonText="Cancelar"
-    placeholder="{{'searchBar' |translate }}" (ionInput)="getJuegos($event)" (ionRefresh)="isSearchBarOpen=false;doRefresh($event)" (ionClear)="isSearchBarOpen=false;doRefresh($event)"
+      placeholder="{{'searchBar' |translate }}" (ionInput)="getJuegos($event)"
+      (ionRefresh)="isSearchBarOpen=false;doRefresh($event)" (ionClear)="isSearchBarOpen=false;doRefresh($event)"
       (ionCancel)="isSearchBarOpen=false;doRefresh($event)">
     </ion-searchbar>
     <ion-buttons slot="end">
-        <ion-button *ngIf="!isSearchBarOpen" (click)="isSearchBarOpen=true">
-          <ion-icon slot="icon-only" name="search"></ion-icon>
-        </ion-button>
+      <ion-button *ngIf="!isSearchBarOpen" (click)="isSearchBarOpen=true">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-segment [(ngModel)]="category" (ionChange)="slides.slideTo(category)" style="background-color:var(--ion-color-primary)"
-    color="light">
+  <ion-segment [(ngModel)]="category" (ionChange)="slides.slideTo(category)"
+    style="background-color:var(--ion-color-primary)" color="light">
     <ion-segment-button layout="icon-start" value="0" style="width: 110px">
       <ion-icon name="logo-game-controller-a" style="margin-right:1px;zoom:0.8"></ion-icon>
       <ion-label>{{"games" | translate}}</ion-label>
@@ -32,7 +33,8 @@
       <ion-label>{{"favorites" | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
-  <div id='indicator' class="SwipedTabs-indicatorSegment" [ngStyle]="{'width.%': (100/this.tabs.length)}" style="margin-top:2px"></div>
+  <div id='indicator' class="SwipedTabs-indicatorSegment" [ngStyle]="{'width.%': (100/this.tabs.length)}"
+    style="margin-top:2px"></div>
 </ion-header>
 
 
@@ -45,13 +47,15 @@
     <ion-slide>
       <ion-content class="fixed-scroll">
         <ion-refresher (ionRefresh)="doRefresh($event)">
-          <ion-refresher-content pullingIcon="arrow-dropdown" [pullingText]="'Downrefresh' | translate" refreshingSpinner="crescent"
-            [refreshingText]="'loading' | translate">
+          <ion-refresher-content pullingIcon="arrow-dropdown" [pullingText]="'Downrefresh' | translate"
+            refreshingSpinner="crescent" [refreshingText]="'loading' | translate">
           </ion-refresher-content>
         </ion-refresher>
         <ion-list #dynamicList id="dynamicList">
           <ion-item-sliding *ngFor="let item of listadoPanel;let i = index">
-            <ion-card (click)="presentModal(item.id, item.title, item.description,item.puntuacion, item.dificultad, item.desarrolladora, item.fecha, item.img, $event)" color="primary">
+            <ion-card
+              (click)="presentModal(item.id, item.title, item.description,item.puntuacion, item.dificultad, item.desarrolladora, item.fecha, item.img, $event)"
+              color="primary">
               <ion-img src={{item.img}}></ion-img>
               <ion-card-content>
                 <ion-card-title>
@@ -85,15 +89,15 @@
     <ion-slide>
       <ion-content class="fixed-scroll">
         <ion-refresher (ionRefresh)="doRefreshFav($event)">
-          <ion-refresher-content pullingIcon="arrow-dropdown" [pullingText]="'Downrefresh' | translate" refreshingSpinner="crescent"
-          [refreshingText]="'loading' | translate">
+          <ion-refresher-content pullingIcon="arrow-dropdown" [pullingText]="'Downrefresh' | translate"
+            refreshingSpinner="crescent" [refreshingText]="'loading' | translate">
           </ion-refresher-content>
         </ion-refresher>
         <ion-list #dynamicList id="dynamicList">
           <ion-item-sliding *ngFor="let item of listadoFavPanel;let i = index">
             <ion-card color="primary">
-              <ion-img src={{item.img}}></ion-img>
-              <ion-card-content>
+              <ion-img (click)="presentModalFav(item.id, item.title, item.description,item.puntuacion, item.dificultad, item.desarrolladora, item.fecha, item.img, $event)" src={{item.img}}></ion-img>
+              <ion-card-content (click)="presentModalFav(item.id, item.title, item.description,item.puntuacion, item.dificultad, item.desarrolladora, item.fecha, item.img, $event)">
                 <ion-card-title>
                   {{item.title}}
                 </ion-card-title>
@@ -119,7 +123,8 @@
             </ion-card>
           </ion-item-sliding>
         </ion-list>
-        <p style="color:var(--ion-color-text)" *ngIf="!listadoFavPanel || listadoFavPanel.length === 0">{{"Nogamesfav" | translate}}</p>
+        <p style="color:var(--ion-color-text)" *ngIf="!listadoFavPanel || listadoFavPanel.length === 0">
+          {{"Nogamesfav" | translate}}</p>
       </ion-content>
     </ion-slide>
   </ion-slides>

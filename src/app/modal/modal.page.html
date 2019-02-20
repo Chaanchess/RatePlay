@@ -41,7 +41,7 @@
       <ion-label>{{"fechaform" | translate}}:</ion-label>
       <ion-input type="text" formControlName="fecha" [readonly]="isReadonly" [(ngModel)]="fecha"></ion-input>
     </ion-item>
-        <ion-button shape="round" (click)="presentActionSheet(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img)">
+        <ion-button id="btnid" shape="round" (click)="presentActionSheet(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img)">
           <ion-icon slot="icon-only" name="star"></ion-icon>
           {{"addtofavorites" | translate}}
         </ion-button>

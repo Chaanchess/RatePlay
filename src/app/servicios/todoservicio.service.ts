@@ -40,6 +40,10 @@ export class TodoservicioService {
     return this.myFavs.get();
   }
 
+  leeJuegoFavorito(id) {
+    return this.myFavs.doc(id).get();
+  }
+
   /* Método para recoger los juegos de la base de datos*/
   leeJuegos() {
     return this.myCollection.get();

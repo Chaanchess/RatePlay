@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ModalController, NavController, LoadingController, ActionSheetController, ToastController } from '@ionic/angular';
+import { ModalController, NavController, LoadingController, ActionSheetController, ToastController, NavParams } from '@ionic/angular';
 import { TodoservicioService } from '../servicios/todoservicio.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BackbuttonService } from '../servicios/backbutton.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-modal',
@@ -41,7 +44,8 @@ export class ModalPage implements OnInit {
     private backButt: BackbuttonService,
     private toastCtrl: ToastController,
     private loadingController: LoadingController,
-    private todoS: TodoservicioService) {
+    private todoS: TodoservicioService,
+    private navParams: NavParams) {
     /* Iniciamos el formulario con los valores del juego 
       que hayamos elegido */
     this.todo = this.formBuilder.group({
@@ -52,6 +56,18 @@ export class ModalPage implements OnInit {
       desarrolladora: [this.desarrolladora, Validators.required],
       fecha: [this.fecha, Validators.required]
     });
+    this.id = this.navParams.get("id");
+    this.todoS.leeJuegoFavorito(this.id).subscribe(d => {
+      if (d.exists) {
+        console.log(d + "existe")
+        document.getElementById('btnid').setAttribute("disabled", "disabled");
+      } else {
+        console.log(d + "no existe")
+        document.getElementById('btnid').removeAttribute("disabled");
+      }
+    })
+
+
   }
 
   /*
@@ -127,6 +143,7 @@ export class ModalPage implements OnInit {
   closeModal() {
     this.modalCtrl.dismiss();
   }
+
 
   /*
   Al abrirse el modal accedemos a nuestro servicio

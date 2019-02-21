@@ -32,7 +32,9 @@ export class AppComponent {
     private authS: AuthenticationService
   ) {
     this.initializeApp();
-    /*Con esto controlamos la posición inicial de los toggle por defecto*/
+    /**
+     * Con esto controlamos la posición inicial de los toggle por defecto
+     */
     this.skinmenu = (environment.defaultSkin == "light" ? false : true);
     this.langmenu = (environment.defaultLanguage == "es" ? false : true);
   }
@@ -68,7 +70,10 @@ export class AppComponent {
     });
   }
 
-  //método para cambiar el idioma de la aplicación
+  /**
+   * Método para cambiar el idioma de la aplicación
+   * @param e evento que comprueba si se ha cambiado la posición del toggle de seleccionar el idioma
+   */
   changeLang(e) {
     console.log("estoy dentro");
     if (e.detail.checked) {
@@ -80,7 +85,10 @@ export class AppComponent {
     }
   }
 
-  //método para cambiar el tema de la aplicación
+  /**
+   * Método para cambiar el tema de la aplicación
+   * @param e evento que comprueba si se ha cambiado la posición del toggle de seleccionar el tema
+   */
   changeSkin(e) {
     if (e.detail.checked) {
       this.authS.setSkin("dark");
@@ -91,7 +99,9 @@ export class AppComponent {
     }
   }
 
-  //método para abrir el modal del acerca de
+  /**
+   * Método para abrir el modal del acerca de
+   */
   async presentModal() {
     const modal = await this.modalController.create({
       component: AcercadePage,
@@ -101,7 +111,9 @@ export class AppComponent {
     return await modal.present();
   }
 
-  //método para cerrar el modal
+  /**
+   * Método para cerrar el modal
+   */
   closeModal() {
     this.modalController.dismiss();
   }

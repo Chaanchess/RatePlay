@@ -12,10 +12,11 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-/* 
-Esta clase es un formulario con los campos necesarios para añadir
+
+/**
+ * Esta clase es un formulario con los campos necesarios para añadir
 juegos a la base de datos.
-*/
+ */
 export class Tab2Page {
   @ViewChild('mifoto') elemElem:IonImg; //instancia de la imagen
   private todo: FormGroup; //Instancia del FormGroup
@@ -30,8 +31,10 @@ export class Tab2Page {
     private toastCtrl: ToastController,
     private translate:TranslateService,
     public loadingController: LoadingController) {
-    /* Creamos el formulario; además
-   asociamos los validares y valores iniciales */
+   /**
+    * Creamos el formulario; además
+    asociamos los validares y valores iniciales
+    */
     this.todo = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -42,7 +45,9 @@ export class Tab2Page {
     });
   }
 
-  //método para enviar el contenido del formulario a la base de datos
+  /**
+   * Método para enviar el contenido del formulario a la base de datos
+   */
   logForm() {
     if (this.photo==false){
       this.showTastFav();
@@ -56,12 +61,16 @@ export class Tab2Page {
       fecha: this.todo.get("fecha").value,
       img: this.elemElem.src
     };
-    /* Mostramos el cargando... */
+    /**
+     * Mostramos el cargando
+     */
     this.myloading = this.presentLoading();
     this.todoS.agregaJuego(data)
       .then((docRef) => {
         console.log("ID insertado (por si lo necesitamos para algo...): ", docRef.id);
-        /* Ponemos en blanco los campos del formulario*/
+        /**
+         * Ponemos en blanco los campos del formulario
+         */
         this.todo.setValue({
           title: '',
           description: '',
@@ -70,20 +79,28 @@ export class Tab2Page {
           desarrolladora:'',
           fecha:''
         });
-        /* Cerramos el cargando...*/
+        /**
+         * Cerramos el cargando...
+         */
         this.loadingController.dismiss();
-        /*Podríamos ir a la página de listado*/
+        /**
+         * Podríamos ir a la página de listado
+         */
         this.router.navigateByUrl('/tabs/tab1');
         this.photo=false;
       })
       .catch((error) => {
         console.error("Error insertando documento: ", error);
-        /* Cerramos el cargando...*/
+        /**
+         * Cerramos el cargando...
+         */
         this.loadingController.dismiss();
       });
   }
 
-  /*Método para mostrar el loading*/
+  /**
+   * Método para mostrar el loading
+   */
   async presentLoading() {
     this.myloading = await this.loadingController.create({
       message: this.translate.instant("Saving")
@@ -91,7 +108,9 @@ export class Tab2Page {
     return await this.myloading.present();
   }
 
-  /*Método para seleccionar una imagen de nuestra galería*/
+  /**
+   * Método para seleccionar una imagen de nuestra galería
+   */
   getImage(){
     const options: CameraOptions = {
       quality: 70,
@@ -106,7 +125,9 @@ export class Tab2Page {
     this.photo=true;
   }
 
-  /*Método para mostrar un toast en caso de que no se haya seleccionado una imagen*/
+  /**
+   * Método para mostrar un toast en caso de que no se haya seleccionado una imagen
+   */
   async showTastFav() {
     const toast = await this.toastCtrl.create({
       message: this.translate.instant("takeimage"),

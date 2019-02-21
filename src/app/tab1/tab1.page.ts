@@ -14,10 +14,10 @@ import { ModalFavPage } from '../modal-fav/modal-fav.page';
   styleUrls: ['tab1.page.scss']
 })
 
-/*
-En esta tab se van a mostrar todos los juegos que haya
+/**
+ * En esta tab se van a mostrar todos los juegos que haya
 guardados en la coleccion 'juegos' de la base de datos.
-*/
+ */
 export class Tab1Page implements OnInit {
   @ViewChild('SwipedTabsSlider') SwipedTabsSlider: IonSlides;
   @ViewChild('infiniteScroll') ionInfiniteScroll: IonInfiniteScroll;
@@ -44,11 +44,10 @@ export class Tab1Page implements OnInit {
     public modalController: ModalController) {
 
   }
-
-  /*
-  Método que recoge los juegos de la base de datos y los introduce en el array
-  necesario para poder mostrarlos. Este método es llamado cada vez que se entra en esta
-  página.
+ /**
+  * Método que recoge los juegos de la base de datos y los introduce en el array
+    necesario para poder mostrarlos. Este método es llamado cada vez que se entra en esta
+    página.
   */
   ionViewDidEnter() {
     this.presentLoading(this.translate.instant("loading"));
@@ -75,8 +74,10 @@ export class Tab1Page implements OnInit {
       });
   }
 
+  /**
+   * Método para mostrar un toast cuando se añade a favoritos
+   */
   async showTastFav() {
-    //método para mostrar un toast
     const toast = await this.toastCtrl.create({
       message: this.translate.instant("Favgame"),
       showCloseButton: true,
@@ -87,8 +88,10 @@ export class Tab1Page implements OnInit {
     toast.present();
   }
 
+  /**
+   * Método para mostrar un toast cuando se elimine de favoritos
+   */
   async showDeleteTastFav() {
-    //método para mostrar un toast
     const toast = await this.toastCtrl.create({
       message: this.translate.instant("DelFavgame"),
       showCloseButton: true,
@@ -99,8 +102,11 @@ export class Tab1Page implements OnInit {
     toast.present();
   }
 
+  /**
+   * Refresher necesario para actualizar la lista de juegos cuando se hace scroll
+   * @param refresher evento que indica si se ha hecho scroll hacia abajo
+   */
   doRefresh(refresher) {
-    //refresher necesario para actualizar la lista de juegos cuando se hace scroll
     this.todoS.leeJuegos()
       .subscribe(querySnapshot => {
         this.listado = [];
@@ -113,6 +119,10 @@ export class Tab1Page implements OnInit {
       });
   }
 
+  /**
+   * Refresher necesario para actualizar la lista de juegos favoritos cuando se hace scroll
+   * @param refresher evento que indica si se ha hecho scroll hacia abajo
+   */
   doRefreshFav(refresher) {
     //refresher necesario para actualizar la lista de juegos favoritos cuando se hace scroll
     this.todoS.leeJuegosFavoritos()
@@ -127,8 +137,11 @@ export class Tab1Page implements OnInit {
       });
   }
 
+  /**
+   * Este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
+   * @param refresher evento que indica si se ha hecho scroll hacia abajo
+   */
   doRefreshModal(refresher) {
-    //este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
     this.presentLoading("Actualizando");
     this.todoS.leeJuegos()
       .subscribe(querySnapshot => {
@@ -143,6 +156,10 @@ export class Tab1Page implements OnInit {
       });
   }
 
+   /**
+   * Este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
+   * @param refresher evento que indica si se ha hecho scroll hacia abajo
+   */
   doRefreshModalFav(refresher) {
     //este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
     this.presentLoading("Actualizando");
@@ -159,8 +176,15 @@ export class Tab1Page implements OnInit {
       });
   }
 
+  /**
+   * Confirm necesario para aceptar si deseamos guardar el juego en nuestra coleccion de favoritos
+   * @param id id del juego
+   * @param titulo título del juego
+   * @param descripcion descrición del juego
+   * @param puntuacion puntuación del juego
+   * @param dificultad dificultad del juego
+   */
   async presentActionSheet(id, titulo, descripcion, puntuacion, dificultad) {
-    //confirm necesario para aceptar si deseamos guardar el juego en nuestra coleccion de favoritos
     const actionSheet = await this.actionsheetCtrl.create({
       header: this.translate.instant("Addfavgame"),
       buttons: [{
@@ -183,8 +207,12 @@ export class Tab1Page implements OnInit {
     await actionSheet.present();
   }
 
+  /**
+   * Confirm necesario para aceptar si deseamos borrar el juego en nuestra coleccion de favoritos
+   * @param id id del juego
+   */
   async presentActionSheetDelfav(id) {
-    //confirm necesario para aceptar si deseamos borrar el juego en nuestra coleccion de favoritos
+
     const actionSheet = await this.actionsheetCtrl.create({
       header: this.translate.instant("QuestDelfavgame"),
       buttons: [{
@@ -206,10 +234,21 @@ export class Tab1Page implements OnInit {
     await actionSheet.present();
   }
 
+  /**
+   * El modal se abrirá con el valor de los atributos del juego que deseemos ver
+   * @param id id del juego
+   * @param titulo título del juego
+   * @param descripcion descripción del juego
+   * @param puntuacion puntuación del juego
+   * @param dificultad dificultad del juego
+   * @param desarrolladora desarrolladora del juego
+   * @param fecha fecha del juego
+   * @param img imagen del juego
+   * @param refresher evento que indica si se ha hecho scroll hacia abajo
+   */
   async presentModal(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img, refresher) {
     const modal = await this.modalController.create({
       component: ModalPage,
-      /* El modal se abrirá con el valor de los atributos del juego que deseemos ver */
       componentProps: {
         id: id,
         titulo: titulo,
@@ -224,10 +263,21 @@ export class Tab1Page implements OnInit {
     return await modal.present();
   }
 
+  /**
+   * El modal se abrirá con el valor de los atributos del juego favorito que deseemos ver
+   * @param id id del juego
+   * @param titulo título del juego
+   * @param descripcion descripción del juego
+   * @param puntuacion puntuación del juego
+   * @param dificultad dificultad del juego
+   * @param desarrolladora desarrolladora del juego
+   * @param fecha fecha del juego
+   * @param img imagen del juego
+   * @param refresher evento que indica si se ha hecho scroll hacia abajo
+   */
   async presentModalFav(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img, refresher) {
     const modal = await this.modalController.create({
       component: ModalFavPage,
-      /* El modal se abrirá con el valor de los atributos del juego que deseemos ver */
       componentProps: {
         id: id,
         titulo: titulo,
@@ -242,11 +292,16 @@ export class Tab1Page implements OnInit {
     return await modal.present();
   }
 
-  //método para cerrar el modal
+  /**
+   * Método para cerrar el modal
+   */
   closeModal() {
     this.modalController.dismiss();
   }
 
+  /**
+   * Método que se ejecuta cada vez que se entra a la tab
+   */
   ionViewWillEnter() {
     this.category = "0";
     this.SwipedTabsSlider.length().then(l => {
@@ -254,7 +309,9 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  //método para saber en que slider se encuentra la 'rayita' de los segment
+  /**
+   * Método para saber en que slider se encuentra la 'rayita' de los segment
+   */
   updateIndicatorPosition() {
     this.SwipedTabsSlider.getActiveIndex().then(i => {
       if (this.ntabs > i) { 
@@ -263,6 +320,10 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  /**
+   * Método para saber en que pestaña nos encontramos
+   * @param cat categoría en la que nos encontramos; puede ser 'Juegos' o 'Favoritos'
+   */
   updateCat(cat: Promise<any>) {
     cat.then(dat => {
       this.category = dat;
@@ -270,14 +331,20 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  /* El método que anima la "rayita" mientras nos estamos deslizando por el slide*/
+  /**
+   * El método que anima la "rayita" mientras nos estamos deslizando por el slide
+   * @param e evento necesario para saber si hemos deslizado para pasar entre slides
+   */
   animateIndicator(e) {
     if (this.SwipedTabsIndicator)
       this.SwipedTabsIndicator.style.webkitTransform = 'translate3d(' +
         ((e.target.swiper.progress * (this.ntabs - 1)) * 100) + '%,0,0)';
   }
 
-  //método para mostrar un loading
+  /**
+   * Método para mostrar un loading
+   * @param msg mensaje del loading
+   */
   async presentLoading(msg) {
     let myloading = await this.loadingController.create({
       message: msg
@@ -289,7 +356,10 @@ export class Tab1Page implements OnInit {
     await this.dynamicList.closeSlidingItems();
   }
 
-  //método para filtrar juegos en la searchbar
+  /**
+   * Método para filtrar juegos en la searchbar
+   * @param ev evento para saber si se ha modificado el texto escrito en la searchbar
+   */
   getJuegos(ev: any) {
     var val = ev.target.value;
     this.listadoPanel = this.listado.filter((item) => {
@@ -297,7 +367,14 @@ export class Tab1Page implements OnInit {
     })
   }
 
-  //método para añadir juegos a nuestra coleccion de favoritos
+  /**
+   * Método para añadir juegos a nuestra coleccion de favoritos
+   * @param id id del juego
+   * @param titulo título del juego
+   * @param descripcion descripción del juego
+   * @param puntuacion puntuación del juego
+   * @param dificultad dificultad del juego
+   */
   addfavorites(id, titulo, descripcion, puntuacion, dificultad) {
     console.log(titulo);
     let data = {
@@ -309,7 +386,10 @@ export class Tab1Page implements OnInit {
     this.todoS.agregaJuegoFav(id, data);
   }
 
-  //método para eliminar juegos a nuestra coleccion de favoritos
+  /**
+   * Método para eliminar juegos a nuestra coleccion de favoritos
+   * @param id del juego
+   */
   deleteFavorites(id){
     console.log(id);
     this.todoS.deleteJuegoFav(id);

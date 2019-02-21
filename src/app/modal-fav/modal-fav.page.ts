@@ -11,8 +11,8 @@ import { BackbuttonService } from '../servicios/backbutton.service';
   styleUrls: ['./modal-fav.page.scss'],
 })
 export class ModalFavPage implements OnInit {
-  /*
-    Se crean todos los atributos del juego
+   /**
+    * Se crean todos los atributos del juego
     que el modal recibe cuando el usuario le
     da a la 'card' del respectivo juego.
     */
@@ -33,8 +33,7 @@ export class ModalFavPage implements OnInit {
     private modalCtrl: ModalController,
     public actionsheetCtrl: ActionSheetController,
     private backButt: BackbuttonService) {
-    /* Iniciamos el formulario con los valores del juego 
-      que hayamos elegido */
+  
     this.todo = this.formBuilder.group({
       title: [this.titulo, Validators.required],
       description: [this.descripcion, Validators.required],
@@ -45,14 +44,24 @@ export class ModalFavPage implements OnInit {
     });
   }
 
-
+/**
+ * Método que se encarga de controlar que los campos no se puedan editar.
+ * @returns true
+ */
   isReadonly() { return true; }
 
+  /**
+  * Método para cerrar el modal.
+  */
   closeModal() {
     this.modalCtrl.dismiss();
   }
 
-
+/**
+  * Al abrirse el modal accedemos a nuestro servicio
+  de backbutton y ponemos el atributo booleano 'openModal'
+  a true para saber que se trata de un modal. 
+  */
   ngOnInit() {
     this.backButt.openModal = true;
   }

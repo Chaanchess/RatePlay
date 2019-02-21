@@ -9,11 +9,12 @@ import { BackbuttonService } from '../servicios/backbutton.service';
   styleUrls: ['./acercade.page.scss'],
 })
 
-/*
-Esta clase es un modal que simplemente muestra
+
+/**
+ * Esta clase es un modal que simplemente muestra
 la información de la aplicación y del desarrollador
 de la misma.
-*/
+ */
 export class AcercadePage implements OnInit {
 
   constructor(
@@ -22,17 +23,17 @@ export class AcercadePage implements OnInit {
     private translate: TranslateService,
   ) { }
 
-  /*
-  Al abrirse el modal accedemos a nuestro servicio
+ /**
+  * Al abrirse el modal accedemos a nuestro servicio
   de backbutton y ponemos el atributo booleano 'openModal'
-  a true para saber que se trata de un modal. 
+  a true para saber que se trata de un modal.
   */
   ngOnInit() {
     this.backButt.openModal=true;
   }
 
-  /*
-  Método para cerrar el modal.
+ /**
+  * Método para cerrar el modal.
   */
   closeModal() {
     this.modalCtrl.dismiss();

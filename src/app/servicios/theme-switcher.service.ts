@@ -15,14 +15,18 @@ interface ThemeStyle {
 @Injectable({
   providedIn: 'root'
 })
-/*Es el servicio que permite cambiar el tema de la aplicación */
+/**
+ * Es el servicio que permite cambiar el tema de la aplicación
+ */
 export class ThemeSwitcherService {
 
   private themes: Theme[] = [];
   private currentTheme: number = 0;
 
   constructor(private domCtrl: DomController, @Inject(DOCUMENT) private document) {
-    /*Los temas de mi aplicación */
+    /**
+     * Los temas de mi aplicación
+     */
     this.themes = [
       {
         name: 'light',
@@ -84,7 +88,10 @@ export class ThemeSwitcherService {
 
   }
 
-  /*Establecemos el tema que se desee */
+  /**
+   * Establecemos el tema que se desee
+   * @param name el nombre del tema seleccionnado
+   */
   setTheme(name): void {
 
     let theme = this.themes.find(theme => theme.name === name);

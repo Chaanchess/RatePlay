@@ -14,14 +14,14 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
   styleUrls: ['./modal.page.scss'],
 })
 
-/*
-  Esta clase es un modal que se encarga de 
+/**
+ * Esta clase es un modal que se encarga de 
   mostrar la información del juego que el 
   usuario desee cuando acceda a él.
-*/
+ */
 export class ModalPage implements OnInit {
-  /*
-  Se crean todos los atributos del juego
+ /**
+  * Se crean todos los atributos del juego
   que el modal recibe cuando el usuario le
   da a la 'card' del respectivo juego.
   */
@@ -46,8 +46,7 @@ export class ModalPage implements OnInit {
     private loadingController: LoadingController,
     private todoS: TodoservicioService,
     private navParams: NavParams) {
-    /* Iniciamos el formulario con los valores del juego 
-      que hayamos elegido */
+
     this.todo = this.formBuilder.group({
       title: [this.titulo, Validators.required],
       description: [this.descripcion, Validators.required],
@@ -70,17 +69,26 @@ export class ModalPage implements OnInit {
 
   }
 
-  /*
-  Método que se encarga de controlar que los campos no se puedan editar.
+ /**
+  * Método que se encarga de controlar que los campos no se puedan editar.
+  * @returns true
   */
   isReadonly() { return true; }
 
 
-  /*
-  Este actionSheet se encarga de mostrar un mensaje de confirmación
+ /**
+  * Este actionSheet se encarga de mostrar un mensaje de confirmación
   de si realmente deseamos añadir el juego a nuestra lista de favoritos.
   Necesita recibir los atributos del juego para añadirlo correctamente
   a la base de datos.
+  * @param id id del juego.
+  * @param titulo título del juego.
+  * @param descripcion descripción del juego.
+  * @param puntuacion puntuación del juego.
+  * @param dificultad dificultad del juego.
+  * @param desarrolladora desarrolladora del juego.
+  * @param fecha fecha del juego.
+  * @param img imagen del juego.
   */
   async presentActionSheet(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img) {
     const actionSheet = await this.actionsheetCtrl.create({
@@ -104,9 +112,17 @@ export class ModalPage implements OnInit {
     await actionSheet.present();
   }
 
-  /*
-  Método que se encargar de añadir el juego a la coleccion de 
+ /**
+  * Método que se encargar de añadir el juego a la coleccion de 
   favoritos de la base de datos.
+  * @param id id del juego.
+  * @param titulo título del juego
+  * @param descripcion descripción del juego.
+  * @param puntuacion puntuación del juego.
+  * @param dificultad dificultad del juego.
+  * @param desarrolladora desarrolladora del juego.
+  * @param fecha fecha del juego.
+  * @param img imagen del juego.
   */
   addfavorites(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img) {
     console.log(titulo);
@@ -122,8 +138,8 @@ export class ModalPage implements OnInit {
     this.todoS.agregaJuegoFav(id, data);
   }
 
-  /*
-  Método que muestra un toast con un mensaje de información
+ /**
+  * Método que muestra un toast con un mensaje de información
   para el usuario.
   */
   async showTastFav() {
@@ -137,16 +153,15 @@ export class ModalPage implements OnInit {
     toast.present();
   }
 
-  /*
-  Método para cerrar el modal.
+ /**
+  * Método para cerrar el modal.
   */
   closeModal() {
     this.modalCtrl.dismiss();
   }
 
-
-  /*
-  Al abrirse el modal accedemos a nuestro servicio
+ /**
+  * Al abrirse el modal accedemos a nuestro servicio
   de backbutton y ponemos el atributo booleano 'openModal'
   a true para saber que se trata de un modal. 
   */

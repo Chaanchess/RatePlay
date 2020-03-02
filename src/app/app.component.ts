@@ -3,6 +3,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../app/servicios/authentication.service';
 import { BackbuttonService } from './servicios/backbutton.service';
 import { NetworkService } from './servicios/network.service';
+import { AngularFireAuth } from "@angular/fire/auth";
+import { Router } from "@angular/router";
+import { MenuController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 import { Platform, ModalController, NavController  } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
@@ -10,7 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ThemeSwitcherService } from './servicios/theme-switcher.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AcercadePage } from './acercade/acercade.page';
+
 
 @Component({
   selector: 'app-root',
@@ -19,17 +23,22 @@ import { AcercadePage } from './acercade/acercade.page';
 export class AppComponent {
   skinmenu: any;
   langmenu: any;
+  user: any;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private AFauth : AngularFireAuth,
     private navCtrl: NavController,
+    private router : Router,
     private themeS: ThemeSwitcherService,
     private translate: TranslateService,
     private network: NetworkService,
     public modalController: ModalController,
     private back: BackbuttonService,
-    private authS: AuthenticationService
+    private menuCtrl: MenuController,
+    private authS: AuthenticationService,
+    private alertController: AlertController
   ) {
     this.initializeApp();
     /**
@@ -59,7 +68,7 @@ export class AppComponent {
 
     });
 
-    //método que comprueba que haya variables de usuario guardadas en la base de datos local
+    //comprueba que haya variables de usuario guardadas en la base de datos local
     this.authS.initChecking().then(() => {
       this.translate.use(this.authS.getLang());
       this.themeS.setTheme(this.authS.getSkin());
@@ -99,22 +108,56 @@ export class AppComponent {
     }
   }
 
+
   /**
-   * Método para abrir el modal del acerca de
+   * Método para confirmar si el usuario desea cerrar sesión y salir de la aplicación
    */
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: AcercadePage,
-      componentProps: {
-      },
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant("logout"),
+      message: this.translate.instant("suretologout"),
+      buttons: [
+        {
+          text: this.translate.instant("decline"),
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: this.translate.instant("salir"),
+          handler: () => {
+            this.logOut();
+            console.log('Confirm Okay');
+          }
+        }
+      ]
     });
-    return await modal.present();
+
+    await alert.present();
   }
+
 
   /**
    * Método para cerrar el modal
    */
   closeModal() {
     this.modalController.dismiss();
+  }
+
+  /**
+   * Método para cerrar sesión, que llama
+   * a nuestro servicio de autenticación
+   */
+  logOut() {
+    //this.presentLoading();
+    this.authS.logout();
+  }
+
+   /**
+   * Método para cerrar el menu lateral cuando se cierre sesión
+   */
+  toggleMenu() {
+    this.menuCtrl.toggle(); //Add this method to your button click function
   }
 }

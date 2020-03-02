@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{"inicioSesion" | translate}}</ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="presentModal()">
+          <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-img style="height: 100px;width: 300px;display: block; margin-left: auto; margin-right: auto;" src="./assets/images/imagenbanner.png"></ion-img>
+<ion-item>
+  <ion-label position="floating" > {{"correoElectronico" | translate}}</ion-label>
+  <ion-input type="text" [(ngModel)]="email" name="email"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label position="floating" > {{"password" | translate}}</ion-label>
+  <ion-input [(ngModel)]="password" type="password" name="password"></ion-input>
+</ion-item>
+<br>
+<ion-button (click)="onSubmitLogin()" expand="block">{{"login" | translate}}</ion-button>
+<br>
+<p text-center routerLink="/registro">{{"noaccount" | translate}}<strong>{{"here" | translate}}</strong></p>
+
+</ion-content>

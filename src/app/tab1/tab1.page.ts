@@ -6,7 +6,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { TodoservicioService } from '../servicios/todoservicio.service';
 import { ToastController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
+import { juego } from "../models/juego";
 import { ModalFavPage } from '../modal-fav/modal-fav.page';
+import { AuthenticationService } from "../servicios/authentication.service";
 
 @Component({
   selector: 'app-tab1',
@@ -32,46 +34,32 @@ export class Tab1Page implements OnInit {
   listadoFav = []; //array que guarda los juegos favoritos
   listadoFavPanel = []; //array que recorremos para mostrar los juegos favoritos
   public isSearchBarOpen = false; //atributo booleano para que la searchbar se muestre al darle al icono
+  user: any; //usuario que navega por la aplicación
+  public juegos = []; //array para guardar los juegos favoritos
+
 
   constructor(private route: ActivatedRoute,
     private todoS: TodoservicioService,
     private translate: TranslateService,
     private toastCtrl: ToastController,
     public loadingController: LoadingController,
+    private authService: AuthenticationService,
     private router: Router,
+
     public platform: Platform,
     public actionsheetCtrl: ActionSheetController,
     public modalController: ModalController) {
 
   }
- /**
-  * Método que recoge los juegos de la base de datos y los introduce en el array
-    necesario para poder mostrarlos. Este método es llamado cada vez que se entra en esta
-    página.
-  */
+  /**
+   * Este método es llamado cada vez que se entra en esta
+     página.
+   */
   ionViewDidEnter() {
-    this.presentLoading(this.translate.instant("loading"));
     this.SwipedTabsIndicator = document.getElementById("indicator");
-    this.todoS.leeJuegos()
-      .subscribe((querySnapshot) => {
-        this.listado = [];
-        this.delete();
-        querySnapshot.forEach((doc) => {
-          this.listado.push({ id: doc.id, ...doc.data() });
-        });
-        this.listadoPanel = this.listado;
-        this.loadingController.dismiss();
-      });
-    this.todoS.leeJuegosFavoritos()
-      .subscribe((querySnapshot) => {
-        this.listadoFav = [];
-        this.delete();
-        querySnapshot.forEach((doc) => {
-          this.listadoFav.push({ id: doc.id, ...doc.data() });
-        });
-        this.listadoFavPanel = this.listadoFav;
-        this.loadingController.dismiss();
-      });
+    this.listado=this.listadoPanel;
+    
+
   }
 
   /**
@@ -102,116 +90,12 @@ export class Tab1Page implements OnInit {
     toast.present();
   }
 
-  /**
-   * Refresher necesario para actualizar la lista de juegos cuando se hace scroll
-   * @param refresher evento que indica si se ha hecho scroll hacia abajo
-   */
-  doRefresh(refresher) {
-    this.todoS.leeJuegos()
-      .subscribe(querySnapshot => {
-        this.listado = [];
-        this.delete();
-        querySnapshot.forEach((doc) => {
-          this.listado.push({ id: doc.id, ...doc.data() });
-        });
-        this.listadoPanel = this.listado;
-        refresher.target.complete();
-      });
-  }
-
-  /**
-   * Refresher necesario para actualizar la lista de juegos favoritos cuando se hace scroll
-   * @param refresher evento que indica si se ha hecho scroll hacia abajo
-   */
-  doRefreshFav(refresher) {
-    //refresher necesario para actualizar la lista de juegos favoritos cuando se hace scroll
-    this.todoS.leeJuegosFavoritos()
-      .subscribe(querySnapshot => {
-        this.listadoFav = [];
-        this.delete();
-        querySnapshot.forEach((doc) => {
-          this.listadoFav.push({ id: doc.id, ...doc.data() });
-        });
-        this.listadoFavPanel = this.listadoFav;
-        refresher.target.complete();
-      });
-  }
-
-  /**
-   * Este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
-   * @param refresher evento que indica si se ha hecho scroll hacia abajo
-   */
-  doRefreshModal(refresher) {
-    this.presentLoading("Actualizando");
-    this.todoS.leeJuegos()
-      .subscribe(querySnapshot => {
-        this.listado = [];
-        this.delete();
-        querySnapshot.forEach((doc) => {
-          this.listado.push({ id: doc.id, ...doc.data() });
-        });
-        this.listadoPanel = this.listado;
-        this.loadingController.dismiss();
-        refresher.target.complete();
-      });
-  }
-
-   /**
-   * Este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
-   * @param refresher evento que indica si se ha hecho scroll hacia abajo
-   */
-  doRefreshModalFav(refresher) {
-    //este refresher hace su función cuando se cierra el modal para recargar si hemos cambiado algo
-    this.presentLoading("Actualizando");
-    this.todoS.leeJuegosFavoritos()
-      .subscribe(querySnapshot => {
-        this.listadoFav = [];
-        this.delete();
-        querySnapshot.forEach((doc) => {
-          this.listadoFav.push({ id: doc.id, ...doc.data() });
-        });
-        this.listadoFavPanel = this.listadoFav;
-        this.loadingController.dismiss();
-        refresher.target.complete();
-      });
-  }
-
-  /**
-   * Confirm necesario para aceptar si deseamos guardar el juego en nuestra coleccion de favoritos
-   * @param id id del juego
-   * @param titulo título del juego
-   * @param descripcion descrición del juego
-   * @param puntuacion puntuación del juego
-   * @param dificultad dificultad del juego
-   */
-  async presentActionSheet(id, titulo, descripcion, puntuacion, dificultad) {
-    const actionSheet = await this.actionsheetCtrl.create({
-      header: this.translate.instant("Addfavgame"),
-      buttons: [{
-        text: this.translate.instant("add"),
-        icon: 'star',
-        handler: () => {
-          this.addfavorites(id, titulo, descripcion, puntuacion, dificultad);
-          this.showTastFav();
-          this.ionViewDidEnter();
-        }
-      }, {
-        text: this.translate.instant("cancel"),
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
-    });
-    await actionSheet.present();
-  }
-
+  
   /**
    * Confirm necesario para aceptar si deseamos borrar el juego en nuestra coleccion de favoritos
    * @param id id del juego
    */
-  async presentActionSheetDelfav(id) {
+  async presentActionSheetDelfav(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img) {
 
     const actionSheet = await this.actionsheetCtrl.create({
       header: this.translate.instant("QuestDelfavgame"),
@@ -219,7 +103,8 @@ export class Tab1Page implements OnInit {
         text: this.translate.instant("yesask"),
         icon: 'trash',
         handler: () => {
-          this.deleteFavorites(id);
+          this.deleteFavoritesArray(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img);
+          this.showDeleteTastFav();
           this.ionViewDidEnter();
         }
       }, {
@@ -257,7 +142,7 @@ export class Tab1Page implements OnInit {
         dificultad: dificultad,
         desarrolladora: desarrolladora,
         fecha: fecha,
-        img:img
+        img: img
       },
     });
     return await modal.present();
@@ -286,7 +171,7 @@ export class Tab1Page implements OnInit {
         dificultad: dificultad,
         desarrolladora: desarrolladora,
         fecha: fecha,
-        img:img
+        img: img
       },
     });
     return await modal.present();
@@ -314,7 +199,7 @@ export class Tab1Page implements OnInit {
    */
   updateIndicatorPosition() {
     this.SwipedTabsSlider.getActiveIndex().then(i => {
-      if (this.ntabs > i) { 
+      if (this.ntabs > i) {
         this.SwipedTabsIndicator.style.webkitTransform = 'translate3d(' + (i * 100) + '%,0,0)';
       }
     });
@@ -352,7 +237,7 @@ export class Tab1Page implements OnInit {
     return await myloading.present();
   }
 
-  async delete() { 
+  async delete() {
     await this.dynamicList.closeSlidingItems();
   }
 
@@ -368,39 +253,70 @@ export class Tab1Page implements OnInit {
   }
 
   /**
-   * Método para añadir juegos a nuestra coleccion de favoritos
+   * Método para eliminar un juego de la lista de favoritos del usuario
    * @param id id del juego
    * @param titulo título del juego
    * @param descripcion descripción del juego
    * @param puntuacion puntuación del juego
    * @param dificultad dificultad del juego
+   * @param desarrolladora desarrolladora del juego
+   * @param fecha fecha del juego
+   * @param img imagen del juego
    */
-  addfavorites(id, titulo, descripcion, puntuacion, dificultad) {
-    console.log(titulo);
-    let data = {
-      title: titulo,
-      description: descripcion,
+  deleteFavoritesArray(id, titulo, descripcion, puntuacion, dificultad, desarrolladora, fecha, img) {
+    const juego: juego = {
+      id: id,
+      titulo: titulo,
+      descripcion: descripcion,
       puntuacion: puntuacion,
-      dificultad: dificultad
-    };
-    this.todoS.agregaJuegoFav(id, data);
-  }
-
-  /**
-   * Método para eliminar juegos a nuestra coleccion de favoritos
-   * @param id del juego
-   */
-  deleteFavorites(id){
-    console.log(id);
-    this.todoS.deleteJuegoFav(id);
-    this.showDeleteTastFav();
+      dificultad: dificultad,
+      desarrolladora: desarrolladora,
+      fechasalida: fecha,
+      imagen: img
+    }
+    this.todoS.deleteJuegoFavoritos(juego, this.authService.getUserID());
   }
 
   ngOnInit() {
-
+    console.log("El usuario es: " + this.authService.getUser());
+    console.log("El id del usuario es: " + this.authService.getUserID());
+    this.leeJuegos(null, true);
+    this.todoS.getUserbyId(this.authService.getUserID()).subscribe(user => {
+      this.user = user;
+      this.juegos = user.juegos;
+    })
+  }
+  
+  /**
+   *  Método que recoge los juegos de la base de datos y los introduce en el array
+    necesario para poder mostrarlos. Está sincronizado para funcionar con el infinite scroll y el refresher
+   */
+  leeJuegos(event?, reload?) {
+    if (!event)
+    this.presentLoading(this.translate.instant("loading"));  //si se entrar por primera vez se muestra un loading
+    
+    this.todoS.getGames(reload).then(d => {
+      if (reload) {
+        this.listado = d;  //carga total
+        this.listadoPanel=this.listado;  //igualamos el array que recorremos en la vista al array principal, asi se puede filtrar por busquedad de una forma mas eficaz
+      } else {
+        d.forEach((u) => {
+          this.listado.push(u); //añadimos al final
+        });
+      }
+      if (!event)
+        this.loadingController.dismiss();
+      if (event) {
+        event.target.complete();
+      }
+       /*Comprobamos si hay más elementos a cargar o no. En caso afirmativo no desactivamos
+       el infiniteScroll*/
+      this.ionInfiniteScroll.disabled = !this.todoS.infiniteScrollActivado();
+    });
+    
   }
 
-  
+
 
 
 }

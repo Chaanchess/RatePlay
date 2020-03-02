@@ -45,12 +45,28 @@
 	"addtofavorites":"Añadir a favoritos",
 	"acerca":"Acerca de",
 	"titleabout":"¿Qué es Rate & Play?",
-	"descriptionabout":"Rate & Play es una aplicación que te permite añadir juegos que te gusten para ver sus características siempre que desees. Esta es una aplicación desarrollada para la asignatura de Desarrollo de Interfaces para el 2º curso de Desarrollo de aplicaciones multiplataforma.",
+	"descriptionabout":"Rate & Play es una aplicación que te permite añadir juegos que te gusten para ver sus características siempre que desees. Esta es una aplicación desarrollada como proyecto final para el 2º curso de Desarrollo de aplicaciones multiplataforma.",
 	"socialabout":"Sígueme en mis redes sociales:",
 	"internet":"Estás conectado a ",
 	"nointernet":"No hay conexión con internet",
 	"btnimage":"Seleccionar imagen",
-	"takeimage":"Debe de seleccionar una imagen"
+	"takeimage":"Debe de seleccionar una imagen",
+	"inicioSesion":"Iniciar sesión",
+	"correoElectronico":"Correo electrónico",
+	"password":"Contraseña",
+	"login":"Entrar",
+	"noaccount":"¿No tienes una cuenta? Crea una pulsando ",
+	"here":"aqui",
+	"iniciandoSesion":"Iniciando sesión...",
+	"errorLogin1":"No se ha podido iniciar sesión.",
+	"errorLogin2":"El email y la contraseña que ingresaste no coinciden con nuestros registros.",
+	"errorLogin3":"Por favor, revisa e inténtalo de nuevo.",
+	"registro":"Registrarse",
+	"haveAccount":"Si ya tienes una cuenta pulsa ",
+	"tryingConnect":"Intentando recuperar la conexión...",
+	"foros":"Foros",
+	"suretologout":"¿Seguro que desea cerrar sesión y salir de la aplicación?",
+	"salir":"Salir"
 
 
 }

@@ -4,7 +4,7 @@
     <ion-menu #menu color="primary">
       <ion-header color="primary" no-border style="text-align:center">
         <ion-toolbar color="primary" style="text-align:center">
-          <ion-title style="text-align: center;font-weight: normal;font-size: 1.1rem;margin-bottom:15px;margin-top:15px">Menu</ion-title>
+          <ion-title style="text-align: center;font-weight: normal;font-size: 1.1rem;margin-bottom:15px;margin-top:15px">{{this.authS.getUser()}}</ion-title>
           <ion-avatar style="text-align: center;margin:auto;cursor: pointer;">
             <ion-img src="./assets/images/logo.gif" width="150px" style="border:2px solid #fff"></ion-img>
           </ion-avatar>
@@ -26,9 +26,9 @@
         <ion-item color="primary" lines="none">
           <ion-label color="primary">
             <ion-button style="--box-shadow:none !important;border:none !important;box-shadow:none !important; font-weight: normal;font-size: 0.95rem"
-              fill="solid" color="primary" (click)=presentModal()>
-              <ion-icon slot="start" name="information-circle-outline" style="zoom:1.3"></ion-icon>
-              <span style="margin-left:16px">{{"acerca" | translate}}</span>
+              fill="solid" color="primary" (click)="presentAlertConfirm();toggleMenu()">
+              <ion-icon slot="start" name="log-out" style="zoom:1.3"></ion-icon>
+              <span style="margin-left:16px">{{"logout" | translate}}</span>
             </ion-button>
           </ion-label>
         </ion-item>

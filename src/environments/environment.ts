@@ -12,11 +12,14 @@ export const environment = {
     storageBucket: "rateandplay-f331a.appspot.com",
     messagingSenderId: "599203522218",
     juegoColeccion: "juego",
-    favoritosColeccion:"favoritos"
+    favoritosColeccion:"favoritos",
+    chatsColeccion:"chatsRomms",
+    users:"users"
   },
   currentLanguages:['es','en'], //idiomas disponibles de la aplicación
   defaultLanguage:"es",
   defaultSkin:"light",
+  autoScroll:"no"
 };
 
 /*

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
 import { TodoservicioService } from '../servicios/todoservicio.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,14 @@ export class NetworkService {
   disconnectSubscription;
   connectSubscription;
 
-  constructor(private network: Network, private toastCtrl: ToastController,
+  constructor(private network: Network, private toastCtrl: ToastController, private loadingController: LoadingController,
     private cloud: TodoservicioService, private translate: TranslateService) {
     this.isConnected = true;
     this.disconnectSubscription = this.network.onDisconnect().subscribe(() => { 
       console.log('network was disconnected :-(');
       this.isConnected = false;
       this.cloud.isConnected = this.isConnected;
+      this.presentLoading(this.translate.instant("tryingConnect"));
       this.showToastNoInternet();
     });
     this.connectSubscription = this.network.onConnect().subscribe(() => { 
@@ -34,6 +35,7 @@ export class NetworkService {
         if (this.isConnected == false) {
           this.isConnected = true;
           this.cloud.isConnected = this.isConnected;
+          this.loadingController.dismiss();
           this.showToastInternet();
         }
       }, 3000);
@@ -47,7 +49,7 @@ export class NetworkService {
     const toast = await this.toastCtrl.create({
       message: this.translate.instant("internet") + this.network.type,
       showCloseButton: true,
-      position: 'bottom',
+      position: 'top',
       closeButtonText: 'Ok',
       duration: 2000
     });
@@ -61,10 +63,21 @@ export class NetworkService {
     const toast = await this.toastCtrl.create({
       message: this.translate.instant("nointernet"),
       showCloseButton: true,
-      position: 'bottom',
+      position: 'top',
       closeButtonText: 'Ok',
       duration: 2000
     });
     toast.present();
+  }
+
+  /**
+   * Muestra un loading en caso de que se pierda la conexión
+   * Una vez la conexión se vuelva a establecer, desaparece
+   */
+  async presentLoading(msg) {
+    let myloading = await this.loadingController.create({
+      message: msg
+    });
+    return await myloading.present();
   }
 }

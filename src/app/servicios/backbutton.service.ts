@@ -26,9 +26,9 @@ export class BackbuttonService {
       */
       if (!this.openModal) {
         /**
-         * En caso de estar en la tab1 si se pulsa atrás se cierra la aplicación
+         * En caso de estar en la tab1 o en el login si se pulsa atrás se cierra la aplicación
          */
-        if (this.currentURL == "/" || this.currentURL == "" || this.currentURL == "/tabs/tab1"){
+        if (this.currentURL == "/" || this.currentURL == "" || this.currentURL == "/tabs/tab1" || this.currentURL == "/login"){
           console.log("CIERRO")
           navigator['app'].exitApp();
          } else {

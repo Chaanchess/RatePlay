@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore'; 
+import { AngularFirestoreModule} from 'angularfire2/firestore'; 
 import { environment } from '../environments/environment';
 import { TranslateModule, TranslateLoader,TranslatePipe } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -16,6 +16,8 @@ import { AcercadePage } from './acercade/acercade.page';
 import { Camera } from '@ionic-native/camera/ngx';
 import { NetworkService } from './servicios/network.service';
 import { Network } from '@ionic-native/network/ngx';
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -26,19 +28,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ThemeSwitcherService } from './servicios/theme-switcher.service';
 import { ModalFavPage } from './modal-fav/modal-fav.page';
+import { ModalchatComponent } from './modalchat/modalchat.component';
 export function setTranslateLoader(http: any) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, ModalPage, AcercadePage, ModalFavPage],
-  entryComponents: [ModalPage, AcercadePage, ModalFavPage],
+  declarations: [AppComponent, ModalPage, AcercadePage, ModalFavPage, ModalchatComponent],
+  entryComponents: [ModalPage, AcercadePage, ModalFavPage, ModalchatComponent],
   imports: [BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     AngularFirestoreModule,
     ReactiveFormsModule,
+    AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     FormsModule,
     HttpClientModule, TranslateModule.forRoot({  //Módulo de traducción
@@ -54,10 +58,11 @@ export function setTranslateLoader(http: any) {
     BackbuttonService,
     SplashScreen,
     Network,  
+    Keyboard,
     NetworkService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthenticationService,
-    ThemeSwitcherService
+    ThemeSwitcherService,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-button slot="start" fill="clear" (click)="closeModal()">
+      <ion-icon style="color:#fff; font-size: 25px" name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title>{{foro.name}}</ion-title>
+    <ion-item color="primary" lines="none" slot="end">
+      <ion-label>Auto-scroll</ion-label>
+      <ion-toggle [(ngModel)]="scroll" (ionChange)="changeScroll($event)" slot="end"></ion-toggle>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content padding>
+
+
+
+  <div *ngIf="room">
+    <div class="sinbackground" *ngFor="let mensaje of room.messages">
+
+      <div class="chat-message" text-right *ngIf="mensaje.autor == this.currentuser">
+        <div class="right-bubble">
+          <span class="msg-name">{{this.authService.getUser()}}</span><br>
+          <span class="msg-date">{{ mensaje.date.toDate() | date:'HH:mm - dd/MM/yyyy'}}</span>
+          <p text-wrap>{{mensaje.content}}</p>
+          <ion-img *ngIf="mensaje.img != ''" src={{mensaje.img}}></ion-img>
+        </div>
+      </div>
+      <div class="chat-message" text-left *ngIf="mensaje.autor != this.currentuser">
+        <div class="left-bubble">
+          <span class="msg-name">{{mensaje.autor}}</span><br>
+          <span class="msg-date">{{mensaje.date.toDate() | date:'HH:mm - dd/MM/yyyy' }}</span>
+          <p text-wrap>{{mensaje.content}}</p>
+          <ion-img *ngIf="mensaje.img != ''" src={{mensaje.img}}></ion-img>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+</ion-content>
+
+<ion-footer padding>
+  <ion-item (keydown.enter)="sendMessage()" (keyup.enter)="clearEnter()">
+    <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    <ion-button (click)="getImage()" color="primary">
+      <ion-icon name="image"></ion-icon>
+    </ion-button>
+    <ion-button color="primary" (click)="getPhoto()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-button>
+    <ion-button [disabled]="!msg" color="primary" (click)="sendMessage()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

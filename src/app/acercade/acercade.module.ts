@@ -32,6 +32,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AcercadePage]
+  declarations: [/*AcercadePage*/]
 })
 export class AcercadePageModule {}

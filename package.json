@@ -19,10 +19,13 @@
     "@angular/http": "~7.1.4",
     "@angular/platform-browser": "~7.1.4",
     "@angular/platform-browser-dynamic": "~7.1.4",
+    "@angular/pwa": "^0.13.5",
     "@angular/router": "~7.1.4",
+    "@angular/service-worker": "~7.1.4",
     "@ionic-native/camera": "^5.0.0-beta.24",
     "@ionic-native/core": "5.0.0-beta.21",
     "@ionic-native/image-picker": "^4.20.0",
+    "@ionic-native/keyboard": "^5.6.0",
     "@ionic-native/native-storage": "^5.0.0-beta.23",
     "@ionic-native/network": "^5.0.0",
     "@ionic-native/splash-screen": "5.0.0-beta.21",
@@ -32,7 +35,8 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "angularfire2": "^5.1.1",
-    "cordova-android": "7.1.4",
+    "cordova-android": "^8.1.0",
+    "cordova-browser": "5.0.4",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
@@ -45,6 +49,7 @@
     "cordova-plugin-whitelist": "^1.3.3",
     "core-js": "^2.5.4",
     "firebase": "^5.7.3",
+    "node-sass": "^4.13.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
@@ -94,6 +99,7 @@
       "cordova-plugin-network-information": {}
     },
     "platforms": [
+      "browser",
       "android"
     ]
   }

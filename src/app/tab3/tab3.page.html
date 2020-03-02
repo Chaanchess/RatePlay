@@ -1,17 +1,35 @@
 <ion-header no-border color="primary">
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-menu-toggle>
-          <ion-button>
-            <ion-icon slot="icon-only" name="menu"></ion-icon>
-          </ion-button>
-        </ion-menu-toggle>
-      </ion-buttons>
-      <ion-title>
-        <!--<img style="vertical-align:middle;display:inline-block" src="../../assets/icon/BBIcon400.png" height="35" style="margin:0">-->
-        <span style="font-weight:normal">{{"favtittle" | translate}}</span>
-      </ion-title>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>
+      <span style="font-weight:normal">{{"foros" | translate}}</span>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content padding>
+
+  <ion-list>
+      <ion-item *ngFor ="let foro of foros" (click)="openChat(foro)">
+        <ion-avatar slot="start">
+          <ion-img [src]="foro.img"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2> <strong>{{foro.name}}</strong> </h2>
+          <p>{{foro.description}}</p>
+        </ion-label>
+      </ion-item>
+    
+  </ion-list>
+
+
+
+  <!-- <ion-button (click)="Onlogout()" >desconectarse</ion-button> -->
+
+</ion-content>

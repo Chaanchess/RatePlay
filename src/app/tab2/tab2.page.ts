@@ -88,6 +88,7 @@ export class Tab2Page {
          */
         this.router.navigateByUrl('/tabs/tab1');
         this.photo=false;
+        
       })
       .catch((error) => {
         console.error("Error insertando documento: ", error);
